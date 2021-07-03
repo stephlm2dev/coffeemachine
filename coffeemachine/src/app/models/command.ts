@@ -1,4 +1,4 @@
-import { DrinkTypes, Tea, Chocolate, Coffee } from './drink';
+import { DrinkTypes, Tea, Chocolate, Coffee, OrangeJuice } from './drink';
 
 type SugarQuantity = 0 | 1 | 2;
 
@@ -26,12 +26,20 @@ class ChocolateCommand implements Command {
   constructor(public moneyGiven: number = 0, public sugarQuantity: SugarQuantity = 0) {}
 }
 
-type DrinkCommand = TeaCommand | CoffeeCommand | ChocolateCommand;
+class OrangeJuiceCommand implements Command {
+  drink = new OrangeJuice();
+  sugarQuantity: SugarQuantity = 0;
+
+  constructor(public moneyGiven: number = 0) { }
+}
+
+type DrinkCommand = TeaCommand | CoffeeCommand | ChocolateCommand | OrangeJuiceCommand;
 
 export {
   SugarQuantity,
   TeaCommand,
   CoffeeCommand,
   ChocolateCommand,
+  OrangeJuiceCommand,
   DrinkCommand
 }
