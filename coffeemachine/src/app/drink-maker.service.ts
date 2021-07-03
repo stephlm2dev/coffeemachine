@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { DrinkTypes, DrinkCommand } from './models/drink';
+import { DrinkCommand } from './models/command';
 import { MessageCommand } from './models/message';
 
 @Injectable({
@@ -11,15 +11,15 @@ export class DrinkMakerService {
   constructor() { }
 
   prepareCommand(command: DrinkCommand | MessageCommand) {
-    const isDrinkCommand = Object.values(DrinkTypes).includes(command.name as any);
+    const isDrinkCommand = 'sugarQuantity' in command;
     return isDrinkCommand
       ? this.makeDrinkCommand(command as DrinkCommand)
       : this.prepareMessageCommand(command as MessageCommand);
   }
 
-  private makeDrinkCommand(drink: DrinkCommand) {
-    const withSugar = drink.sugarQuantity !== 0;
-    return `${drink.name}:${withSugar ? drink.sugarQuantity + ":0" : ":"}`
+  private makeDrinkCommand(command: DrinkCommand) {
+    const withSugar = command.sugarQuantity !== 0;
+    return `${command.drink.code}:${withSugar ? command.sugarQuantity + ":0" : ":"}`
   }
 
   private prepareMessageCommand(message: MessageCommand) {
