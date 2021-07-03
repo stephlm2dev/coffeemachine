@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { DrinkTypes, DrinkCommand } from './models/drink';
-import { MessageCommand } from './models/message';
+import { DrinkCommand } from './models/command';
+import { MessageCommand, MessageTypes } from './models/message';
 
 @Injectable({
   providedIn: 'root'
@@ -11,18 +11,36 @@ export class DrinkMakerService {
   constructor() { }
 
   prepareCommand(command: DrinkCommand | MessageCommand) {
-    const isDrinkCommand = Object.values(DrinkTypes).includes(command.name as any);
-    return isDrinkCommand
-      ? this.makeDrinkCommand(command as DrinkCommand)
-      : this.prepareMessageCommand(command as MessageCommand);
+    let cmd = null;
+
+    if ('sugarQuantity' in command) {
+      cmd = this.isValidDrinkCommand(command)
+        ? this.makeDrinkCommand(command as DrinkCommand)
+        : this.missingMoney(command as DrinkCommand);
+    } else {
+      cmd = this.prepareMessageCommand(command as MessageCommand);
+    }
+    return cmd;
   }
 
-  private makeDrinkCommand(drink: DrinkCommand) {
-    const withSugar = drink.sugarQuantity !== 0;
-    return `${drink.name}:${withSugar ? drink.sugarQuantity + ":0" : ":"}`
+  private makeDrinkCommand(command: DrinkCommand) {
+    const withSugar = command.sugarQuantity !== 0;
+    return `${command.drink.code}:${withSugar ? command.sugarQuantity + ":0" : ":"}`
   }
 
   private prepareMessageCommand(message: MessageCommand) {
     return `${message.name}:${message.message}`;
+  }
+
+  private isValidDrinkCommand(command: DrinkCommand) {
+    return command.drink.price <= command.moneyGiven;
+  }
+
+  private missingMoney(command: DrinkCommand) {
+    const message: MessageCommand = {
+      name: MessageTypes.DEFAULT,
+      message: `${Math.abs(command.drink.price - command.moneyGiven)}€ are missing`
+    }
+    return this.prepareMessageCommand(message);
   }
 }
