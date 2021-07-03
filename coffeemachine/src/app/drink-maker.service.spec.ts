@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { DrinkMakerService } from './drink-maker.service';
 
-import { TeaCommand, CoffeeCommand, ChocolateCommand } from './models/command';
+import { TeaCommand, CoffeeCommand, ChocolateCommand, OrangeJuiceCommand } from './models/command';
 import { MessageTypes } from './models/message';
 
 describe('DrinkMakerService', () => {
@@ -33,6 +33,11 @@ describe('DrinkMakerService', () => {
     expect(service.prepareCommand(coffee)).toBe("C:2:0");
   });
 
+  it('should make 1 orange juice', () => {
+    const juice = new OrangeJuiceCommand(2);
+    expect(service.prepareCommand(juice)).toBe("O::");
+  });
+
   // KO Not enough money given tests
   it('should NOT make 1 tea with 1 sugar and a stick', () => {
     const tea = new TeaCommand(0, 1);
@@ -47,6 +52,11 @@ describe('DrinkMakerService', () => {
   it('should NOT make 1 coffee with 2 sugars and a stick', () => {
     const coffee = new CoffeeCommand(0, 2);
     expect(service.prepareCommand(coffee)).toBe("M:0.6€ are missing");
+  });
+
+  it('should NOT make 1 orange juice', () => {
+    const juice = new OrangeJuiceCommand(0);
+    expect(service.prepareCommand(juice)).toBe("M:0.6€ are missing");
   });
 
   // Message tests
