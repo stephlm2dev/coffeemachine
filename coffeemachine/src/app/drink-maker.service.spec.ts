@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { DrinkMakerService } from './drink-maker.service';
 
-import { DrinkTypes } from './models/drink';
+import { TeaCommand, CoffeeCommand, ChocolateCommand } from './models/command';
 import { MessageTypes } from './models/message';
 
 describe('DrinkMakerService', () => {
@@ -18,24 +18,18 @@ describe('DrinkMakerService', () => {
   });
 
   it('should make 1 tea with 1 sugar and a stick', () => {
-    expect(service.prepareCommand({
-      name: DrinkTypes.TEA,
-      sugarQuantity: 1
-    })).toBe("T:1:0");
+    const tea = new TeaCommand(1);
+    expect(service.prepareCommand(tea)).toBe("T:1:0");
   });
 
   it('should makes 1 chocolate with no sugar - and therefore no stick', () => {
-    expect(service.prepareCommand({
-      name: DrinkTypes.CHOCOLATE,
-      sugarQuantity: 0
-    })).toBe("H::");
+    const chocolate = new ChocolateCommand();
+    expect(service.prepareCommand(chocolate)).toBe("H::");
   });
 
   it('should makes 1 coffee with 2 sugars and a stick', () => {
-    expect(service.prepareCommand({
-      name: DrinkTypes.COFFEE,
-      sugarQuantity: 2
-    })).toBe("C:2:0");
+    const coffee = new CoffeeCommand(2);
+    expect(service.prepareCommand(coffee)).toBe("C:2:0");
   });
 
   it('should forwards any message received onto the coffee machine interface', () => {
