@@ -7,7 +7,6 @@ import { MessageCommand, MessageTypes } from './models/message';
   providedIn: 'root',
 })
 export class DrinkMakerService {
-
   constructor() {}
 
   prepareCommand(command: DrinkCommand | MessageCommand) {
@@ -35,7 +34,7 @@ export class DrinkMakerService {
   }
 
   private isDrinkCommand(command: DrinkCommand | MessageCommand) {
-    return command instanceof DrinkCommand
+    return command instanceof DrinkCommand;
   }
 
   private canPayDrink(command: DrinkCommand) {
@@ -45,9 +44,7 @@ export class DrinkMakerService {
   private missingMoney(command: DrinkCommand) {
     const message: MessageCommand = {
       name: MessageTypes.DEFAULT,
-      message: `${Math.abs(
-        command.drink.price - command.money
-      )}€ are missing`,
+      message: `${Math.abs(command.drink.price - command.money)}€ are missing`,
     };
     return this.prepareMessageCommand(message);
   }

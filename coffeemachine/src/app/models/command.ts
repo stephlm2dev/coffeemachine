@@ -39,21 +39,21 @@ class DrinkCommand {
   static askFor(name: string) {
     let command = null;
     switch (name) {
-      case "Tea":
+      case 'Tea':
         command = new DrinkCommand(new Tea());
         break;
-      case "Coffee":
+      case 'Coffee':
         command = new DrinkCommand(new Coffee());
         break;
-      case "Chocolate":
+      case 'Chocolate':
         command = new DrinkCommand(new Chocolate());
         break;
-      case "Orange Juice":
+      case 'Orange Juice':
         command = new DrinkCommand(new OrangeJuice());
         break;
-      
+
       default:
-        throw `Invalid drink: ${name}`
+        throw `Invalid drink: ${name}`;
         break;
     }
     return command;
@@ -61,4 +61,3 @@ class DrinkCommand {
 }
 
 export default DrinkCommand;
-
