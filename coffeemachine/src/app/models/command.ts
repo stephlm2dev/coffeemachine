@@ -1,4 +1,12 @@
-import { DrinkCapability, DrinkCapabilities, DrinkTypes, Tea, Chocolate, Coffee, OrangeJuice } from './drink';
+import {
+  DrinkCapability,
+  DrinkCapabilities,
+  DrinkTypes,
+  Tea,
+  Chocolate,
+  Coffee,
+  OrangeJuice,
+} from './drink';
 
 type SugarQuantity = 0 | 1 | 2;
 
@@ -15,7 +23,9 @@ class Command {
   }
 
   public addExtra(opts: DrinkCapabilities) {
-    this.options = opts.filter((opt: DrinkCapability) => this.drink.capabilities.includes(opt));
+    this.options = opts.filter((opt: DrinkCapability) =>
+      this.drink.capabilities.includes(opt)
+    );
   }
 
   public giveMoney(amount: number) {
@@ -40,7 +50,11 @@ class OrangeJuiceCommand extends Command {
   readonly sugarQuantity: SugarQuantity = 0;
 }
 
-type DrinkCommand = TeaCommand | CoffeeCommand | ChocolateCommand | OrangeJuiceCommand;
+type DrinkCommand =
+  | TeaCommand
+  | CoffeeCommand
+  | ChocolateCommand
+  | OrangeJuiceCommand;
 
 export {
   SugarQuantity,
@@ -48,5 +62,5 @@ export {
   CoffeeCommand,
   ChocolateCommand,
   OrangeJuiceCommand,
-  DrinkCommand
-}
+  DrinkCommand,
+};

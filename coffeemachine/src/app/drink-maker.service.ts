@@ -4,11 +4,10 @@ import { DrinkCommand } from './models/command';
 import { MessageCommand, MessageTypes } from './models/message';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DrinkMakerService {
-
-  constructor() { }
+  constructor() {}
 
   prepareCommand(command: DrinkCommand | MessageCommand) {
     let cmd = null;
@@ -25,7 +24,9 @@ export class DrinkMakerService {
 
   private makeDrinkCommand(command: DrinkCommand) {
     const withSugar = command.sugarQuantity !== 0;
-    return `${command.drink.code}${command.options.join('')}:${withSugar ? command.sugarQuantity + ":0" : ":"}`
+    return `${command.drink.code}${command.options.join('')}:${
+      withSugar ? command.sugarQuantity + ':0' : ':'
+    }`;
   }
 
   private prepareMessageCommand(message: MessageCommand) {
@@ -39,8 +40,10 @@ export class DrinkMakerService {
   private missingMoney(command: DrinkCommand) {
     const message: MessageCommand = {
       name: MessageTypes.DEFAULT,
-      message: `${Math.abs(command.drink.price - command.moneyGiven)}€ are missing`
-    }
+      message: `${Math.abs(
+        command.drink.price - command.moneyGiven
+      )}€ are missing`,
+    };
     return this.prepareMessageCommand(message);
   }
 }
