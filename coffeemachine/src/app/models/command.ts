@@ -1,36 +1,43 @@
-import { DrinkTypes, Tea, Chocolate, Coffee, OrangeJuice } from './drink';
+import { DrinkCapability, DrinkCapabilities, DrinkTypes, Tea, Chocolate, Coffee, OrangeJuice } from './drink';
 
 type SugarQuantity = 0 | 1 | 2;
 
-interface Command {
-  drink: DrinkTypes;
-  sugarQuantity: SugarQuantity;
-  moneyGiven: number;
-}
-
-class TeaCommand implements Command {
-  drink = new Tea();
-
-  constructor(public moneyGiven: number = 0, public sugarQuantity: SugarQuantity = 0) {}
-}
-
-class CoffeeCommand implements Command {
-  drink = new Coffee();
-
-  constructor(public moneyGiven: number = 0, public sugarQuantity: SugarQuantity = 0) {}
-}
-
-class ChocolateCommand implements Command {
-  drink = new Chocolate();
-
-  constructor(public moneyGiven: number = 0, public sugarQuantity: SugarQuantity = 0) {}
-}
-
-class OrangeJuiceCommand implements Command {
-  drink = new OrangeJuice();
+class Command {
+  drink!: DrinkTypes;
   sugarQuantity: SugarQuantity = 0;
+  options: DrinkCapabilities = [];
+  moneyGiven: number = 0;
 
-  constructor(public moneyGiven: number = 0) { }
+  public addSugar(quantity: SugarQuantity) {
+    if (this.drink.capabilities.includes(DrinkCapability.WITH_SUGAR)) {
+      this.sugarQuantity = quantity;
+    }
+  }
+
+  public addExtra(opts: DrinkCapabilities) {
+    this.options = opts.filter((opt: DrinkCapability) => this.drink.capabilities.includes(opt));
+  }
+
+  public giveMoney(amount: number) {
+    this.moneyGiven = amount;
+  }
+}
+
+class TeaCommand extends Command {
+  drink = new Tea();
+}
+
+class CoffeeCommand extends Command {
+  drink = new Coffee();
+}
+
+class ChocolateCommand extends Command {
+  drink = new Chocolate();
+}
+
+class OrangeJuiceCommand extends Command {
+  drink = new OrangeJuice();
+  readonly sugarQuantity: SugarQuantity = 0;
 }
 
 type DrinkCommand = TeaCommand | CoffeeCommand | ChocolateCommand | OrangeJuiceCommand;
