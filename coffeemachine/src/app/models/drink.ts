@@ -1,37 +1,48 @@
+enum DrinkCapability {
+  WITH_SUGAR = '', 
+  EXTRA_HOT = "h"
+}
+
+type DrinkCapabilities = Array<DrinkCapability>;
+
 abstract class Drink {
   code: string = "";
   price: number = 0.0;
+  capabilities: DrinkCapabilities = [];
 }
 
 class Tea implements Drink {
-  // private readonly name: string = "Tea";
   readonly code: string = "T";
   readonly price: number = 0.4;
-
-  constructor() {}
+  readonly capabilities: DrinkCapabilities = [DrinkCapability.EXTRA_HOT, DrinkCapability.WITH_SUGAR]
 }
 
 class Coffee implements Drink {
-  // private readonly name: string = "Tea";
   readonly code: string = "C";
   readonly price: number = 0.6;
-
-  constructor() {}
+  readonly capabilities: DrinkCapabilities = [DrinkCapability.EXTRA_HOT, DrinkCapability.WITH_SUGAR]
 }
 
 class Chocolate implements Drink {
-  // private readonly name: string = "Chocolate";
   readonly code: string = "H";
   readonly price: number = 0.5;
-
-  constructor() {}
+  readonly capabilities: DrinkCapabilities = [DrinkCapability.EXTRA_HOT, DrinkCapability.WITH_SUGAR]
 }
 
-type DrinkTypes = Tea | Coffee | Chocolate;
+class OrangeJuice implements Drink {
+  readonly code: string = "O";
+  readonly price: number = 0.6;
+  readonly capabilities: DrinkCapabilities = []
+}
+
+type DrinkTypes = Tea | Coffee | Chocolate | OrangeJuice;
 
 export {
+  DrinkCapability,
+  DrinkCapabilities,
   Tea,
   Coffee,
   Chocolate,
+  OrangeJuice,
   DrinkTypes
 }
