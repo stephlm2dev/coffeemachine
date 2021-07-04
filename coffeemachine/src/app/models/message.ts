@@ -1,13 +1,10 @@
 enum MessageTypes {
-  DEFAULT = "M",
-};
+  DEFAULT = 'M',
+}
 
 type MessageCommand = {
   name: MessageTypes;
   message: string;
-}
+};
 
-export {
-  MessageTypes,
-  MessageCommand
-}
+export { MessageTypes, MessageCommand };
