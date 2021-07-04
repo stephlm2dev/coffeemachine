@@ -13,7 +13,7 @@ export class DrinkMakerService {
     let cmd = null;
 
     if ('sugarQuantity' in command) {
-      cmd = this.isValidDrinkCommand(command)
+      cmd = this.canPayDrink(command)
         ? this.makeDrinkCommand(command as DrinkCommand)
         : this.missingMoney(command as DrinkCommand);
     } else {
@@ -33,7 +33,7 @@ export class DrinkMakerService {
     return `${message.name}:${message.message}`;
   }
 
-  private isValidDrinkCommand(command: DrinkCommand) {
+  private canPayDrink(command: DrinkCommand) {
     return command.drink.price <= command.moneyGiven;
   }
 
