@@ -25,7 +25,7 @@ export class DrinkMakerService {
 
   private makeDrinkCommand(command: DrinkCommand) {
     const withSugar = command.sugarQuantity !== 0;
-    return `${command.drink.code}:${withSugar ? command.sugarQuantity + ":0" : ":"}`
+    return `${command.drink.code}${command.options.join('')}:${withSugar ? command.sugarQuantity + ":0" : ":"}`
   }
 
   private prepareMessageCommand(message: MessageCommand) {
