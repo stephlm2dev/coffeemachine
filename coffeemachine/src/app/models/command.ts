@@ -10,11 +10,15 @@ import {
 
 type SugarQuantity = 0 | 1 | 2;
 
-class Command {
+class DrinkCommand {
   drink!: DrinkTypes;
   sugarQuantity: SugarQuantity = 0;
   options: DrinkCapabilities = [];
-  moneyGiven: number = 0;
+  money: number = 0;
+
+  constructor(drink: DrinkTypes) {
+    this.drink = drink;
+  }
 
   public addSugar(quantity: SugarQuantity) {
     if (this.drink.capabilities.includes(DrinkCapability.WITH_SUGAR)) {
@@ -28,39 +32,33 @@ class Command {
     );
   }
 
-  public giveMoney(amount: number) {
-    this.moneyGiven = amount;
+  public paidWith(amount: number) {
+    this.money += amount;
+  }
+
+  static askFor(name: string) {
+    let command = null;
+    switch (name) {
+      case "Tea":
+        command = new DrinkCommand(new Tea());
+        break;
+      case "Coffee":
+        command = new DrinkCommand(new Coffee());
+        break;
+      case "Chocolate":
+        command = new DrinkCommand(new Chocolate());
+        break;
+      case "Orange Juice":
+        command = new DrinkCommand(new OrangeJuice());
+        break;
+      
+      default:
+        throw `Invalid drink: ${name}`
+        break;
+    }
+    return command;
   }
 }
 
-class TeaCommand extends Command {
-  drink = new Tea();
-}
+export default DrinkCommand;
 
-class CoffeeCommand extends Command {
-  drink = new Coffee();
-}
-
-class ChocolateCommand extends Command {
-  drink = new Chocolate();
-}
-
-class OrangeJuiceCommand extends Command {
-  drink = new OrangeJuice();
-  readonly sugarQuantity: SugarQuantity = 0;
-}
-
-type DrinkCommand =
-  | TeaCommand
-  | CoffeeCommand
-  | ChocolateCommand
-  | OrangeJuiceCommand;
-
-export {
-  SugarQuantity,
-  TeaCommand,
-  CoffeeCommand,
-  ChocolateCommand,
-  OrangeJuiceCommand,
-  DrinkCommand,
-};

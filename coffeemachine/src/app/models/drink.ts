@@ -6,8 +6,8 @@ enum DrinkCapability {
 type DrinkCapabilities = Array<DrinkCapability>;
 
 abstract class Drink {
-  code: string = '';
-  price: number = 0.0;
+  code!: string;
+  price!: number;
   capabilities: DrinkCapabilities = [];
 }
 
